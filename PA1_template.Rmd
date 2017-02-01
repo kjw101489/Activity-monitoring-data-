@@ -1,24 +1,29 @@
 # Reproducible Research: Peer Assessment 1
-
+## Read in the data file and preprocess
 ad <- read.csv("activity.csv")
 steps <- ad$steps
 date <- ad$date
 interval <- ad$interval
-
+## Building a Histogram
 hist(tapply(steps, date, sum), xlab="Steps", ylab= "Days", breaks=10, main="Steps taken on a Daily basis")
-steps_day <- as.numeric(tapply(steps, date, sum))
 
+## Calculate the Mean and Median Values
+steps_day <- as.numeric(tapply(steps, date, sum))
 mean_steps_day <- mean(steps_day, na.rm=TRUE)
 median_steps_day <- median(steps_day, na.rm=TRUE)
+
+## Compute the average daily activity pattern
 interval <- as.factor(as.character(interval))
 mean_int <- as.numeric(tapply(steps, interval, mean, na.rm=TRUE))
-
 trueint <- data.frame(trueint = as.numeric(levels(interval)),mean_int)
 trueint <- trueint[order(trueint$trueint),]
-plot(trueint$trueint, trueint$mean_int, type = "l", main = "Average steps per minute", xlab="Time of Day", ylab="Mean Steps")
 
+## Build the plot
+plot(trueint$trueint, trueint$mean_int, type = "l", main = "Average steps per minute", xlab="Time of Day", ylab="Mean Steps")
 aveintper <- trueint[order(trueint$mean_int, decreasing=TRUE),]
 head(aveintper, n=1)
+
+## Input Missing Values
 missvals <- sum(is.na(steps))
 steps[is.na(steps)] <- 37.38
 summary(steps)
