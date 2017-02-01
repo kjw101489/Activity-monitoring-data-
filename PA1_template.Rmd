@@ -1,3 +1,5 @@
+# Reproducible Research: Peer Assessment 1
+
 ad <- read.csv("activity.csv")
 steps <- ad$steps
 date <- ad$date
