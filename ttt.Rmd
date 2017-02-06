@@ -1,4 +1,0 @@
-# Activity Monitoring Data
-## Read in the data file and preprocess
-```{r}
-ad <- read.csv("activity.csv")
