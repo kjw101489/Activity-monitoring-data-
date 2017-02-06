@@ -1,4 +1,5 @@
 # Reproducible Research: Peer Assessment 1
+
 ## Read in the data file and preprocess
 ```{r, echo=TRUE}
 ad <- read.csv("activity.csv")
@@ -34,14 +35,18 @@ trueint <- trueint[order(trueint$trueint),]
 ```{r, echo=TRUE}
 plot(trueint$trueint, trueint$mean_int, type = "l", main = "Average steps per minute", xlab="Time of Day", ylab="Mean Steps")
 ```
-## Build the plot
+## 5-minute Interval with the most average steps
 ```{r, echo=TRUE}
 aveintper <- trueint[order(trueint$mean_int, decreasing=TRUE),]
 head(aveintper, n=1)
 ```
-## Input Missing Values
+
+# Input Missing Values
 ```{r, echo=TRUE}
 missvals <- sum(is.na(steps))
+```
+## Replacing the NA values
+```{r, echo=TRUE}
 steps[is.na(steps)] <- 37.38
 summary(steps)
 hist(tapply(newad$steps, newad$date, sum), xlab="Steps", ylab= "Days", breaks=10, main="Steps taken on a Daily basis")
@@ -54,14 +59,20 @@ newad_new <- newad
 newad_new$date <- as.Date(newad_new$date)
 newad_new$day <- weekdays(newad_new$date) == "Sunday"  | weekdays(newad_new$date) == "Saturday"
 ```
+# Are there differences in activity patterns between weekdays and weekends?
+We'll need to create factor variables of “weekend” or “weekday” for this dataset:
 ```{r, echo=TRUE}
 newad_new_weekday <- newad_new[newad_new$day == FALSE, ]
 newad_new_weekend <- newad_new[newad_new$day == TRUE, ]
+```
+Make two plots of weekdays and weekends.
+```{r, echo=TRUE}
 #First create weekday and weekend variables
 mean_weekday <- tapply(newad_new_weekday$steps, newad_new_weekday$interval, mean)
 mean_weekend <- tapply(newad_new_weekend$steps, newad_new_weekend$interval, mean)
 #then create two separate plots
 ```
+
 ```{r, echo=TRUE}
 plot(mean_weekday, type = "l", xlab="Time interval", ylab="Steps", main="Weekday activity", col="darkblue")
 plot(mean_weekend, type="l", xlab="Time interval", ylab="Steps", main="Weekend activity", col="red")
