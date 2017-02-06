@@ -9,17 +9,21 @@ steps <- ad$steps
 date <- ad$date
 interval <- ad$interval
 ```
+You may want to get a visual idea of the distribution of steps taken in a day, so building a histogram will be helpful in examining these data.
 ## Building a Histogram
 ```{r, echo=TRUE}
 hist(tapply(steps, date, sum), xlab="Steps", ylab= "Days", breaks=10, main="Steps taken on a Daily basis")
 ```
 ## Calculate the Mean and Median Values
+Examination of the mean and median can be helpful in getting a good handle on the measures of central tendency in the data.We first create a framework that allows us to calculate the mean or median per day:
 ```{r, echo=TRUE}
 steps_day <- as.numeric(tapply(steps, date, sum))
 mean_steps_day <- mean(steps_day, na.rm=TRUE)
 median_steps_day <- median(steps_day, na.rm=TRUE)
 ```
+The median of the total number of steps taken per day is 1.0765 × 104Thus, the median and the mean values are very close together.
 ## Compute the average daily activity pattern
+We want to build a time series plot at five minute intervals in order to obesrve the activity pattern.  You'll first want to change the interval variable to a factor variable and calculate the mean - as we have done above.
 ```{r, echo=TRUE}
 interval <- as.factor(as.character(interval))
 mean_int <- as.numeric(tapply(steps, interval, mean, na.rm=TRUE))
@@ -29,6 +33,9 @@ trueint <- trueint[order(trueint$trueint),]
 ## Build the plot
 ```{r, echo=TRUE}
 plot(trueint$trueint, trueint$mean_int, type = "l", main = "Average steps per minute", xlab="Time of Day", ylab="Mean Steps")
+```
+## Build the plot
+```{r, echo=TRUE}
 aveintper <- trueint[order(trueint$mean_int, decreasing=TRUE),]
 head(aveintper, n=1)
 ```
