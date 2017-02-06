@@ -1,9 +1,14 @@
 # Reproducible Research: Peer Assessment 1
 ## Read in the data file and preprocess
+```{r, echo=TRUE}
 ad <- read.csv("activity.csv")
+```
+Variables are easier to manipulate if they are transformed into a slightly more user friendly format.
+```{r, echo=TRUE}
 steps <- ad$steps
 date <- ad$date
 interval <- ad$interval
+```
 ## Building a Histogram
 hist(tapply(steps, date, sum), xlab="Steps", ylab= "Days", breaks=10, main="Steps taken on a Daily basis")
 
